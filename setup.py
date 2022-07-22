@@ -114,10 +114,10 @@ class MyDrive():
 
 def main():
     # A pasta que contem todos os audion no caminho Meu Drive/FACULDADE/FORMAÇÃO SOCIO CULTURAL II/ARQUIVOS IV/2022
-    pasta_main = "1Gwia5wLcj9f43765HuesHqb-VS3-67Y-"
+    pasta_main = os.getenv('ID_MAIN_DIR')
     my_drive = MyDrive()
     # my_drive.create_folder("Primeira", '1In4c6ohp23q5ln7gXWxUxKtwp-rK6eTH')
-    caminho = "/home/cleyton/Área de Trabalho/BE_REMASTER/meu_arquivo"
+    caminho = os.getenv('ID_MAIN_WAY')
     files = os.listdir(caminho)
     print(files)
     # my_drive = MyDrive()

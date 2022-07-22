@@ -14,6 +14,9 @@ import os
 import setup
 from convertmp3 import *
 from selenium.webdriver import Keys, ActionChains
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -692,7 +695,7 @@ class DowloaderThread(QThread):
                 element = browser.find_element(
                     By.XPATH, f'//*[@id = "pagingid"]/li[{itt}]/a')
                 browser.execute_script("arguments[0].click();", element)
-                sleep(1)
+                sleep(2)
                 lingk = browser.find_elements(By.PARTIAL_LINK_TEXT, 'Ouvir')
                 for item in lingk:
                     linsk = item.get_attribute("href")
@@ -715,7 +718,7 @@ class DowloaderThread(QThread):
 
         caminho = os.getenv('WAY_INPUT_SHORT')
         novo = self.caminho
-        sleep(6)
+        sleep(10)
         try:
             for item in os.listdir(caminho):
                 new_cam = os.path.join(caminho, item)
@@ -786,23 +789,24 @@ class ClearThread(QThread):
                         sleep(1)
                         ct_apaga.append(ctt-2)
                         # print(element)
-                    except:
-                        pass
+                    except Exception as e:
+                        print(e)
+                        break
                 self.update_rotulo_c.emit("Iniciando limpeza por itens...")
                 countsx = 0
                 for idc in ct_apaga:
                     t_link_1x = len(ct_apaga)
                     countsx += 1
                     try:
-                        print(idc)
                         localidade = browser.find_element(
                             By.CSS_SELECTOR, f'#sendDelete{idc}')
                         browser.execute_script("arguments[0].click();", localidade)
                         sleep(0.2)
                         self.update_rotulo_c.emit(f"{countsx}/{t_link_1x} arquivos apagados")
                         self.update_progress_c.emit((countsx*100)/t_link_1x)
-                    except:
-                        pass
+                    except Exception as e:
+                        print(e)
+                        break
                 sleep(1)
                 deletar = browser.find_element(
                     By.CSS_SELECTOR, '#ajaxdiv > div:nth-child(4) > div.floatLeft > button')
